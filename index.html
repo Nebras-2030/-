@@ -14,29 +14,17 @@
 
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: #f7f9fd; /* خلفية فاتحة وموحدة */
         min-height: 100vh;
         padding: 20px;
         position: relative;
     }
 
-    body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: 
-            radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
-        pointer-events: none;
-        z-index: -1;
-    }
+    /* تم إزالة تأثير body::before ليتناسب مع الخلفية الفاتحة */
 
     .header {
         text-align: center;
-        color: white;
+        color: #1a237e; /* لون داكن يتناسب مع الخلفية الفاتحة */
         margin-bottom: 40px;
         animation: fadeInDown 1s ease-out;
     }
@@ -65,7 +53,7 @@
         font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 15px;
-        text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        text-shadow: 2px 2px 8px rgba(0,0,0,0.1); /* ظل خفيف على النص */
     }
 
     .header p {
@@ -77,10 +65,10 @@
     .container {
         max-width: 1000px;
         margin: 0 auto;
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(255, 255, 255, 0.98); /* خلفية بيضاء خفيفة للمحتوى */
         backdrop-filter: blur(20px);
         border-radius: 30px;
-        box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        box-shadow: 0 25px 50px rgba(0,0,0,0.1);
         overflow: hidden;
         animation: slideUp 0.8s ease-out;
     }
@@ -108,10 +96,10 @@
     }
 
     .language-section {
-        background: linear-gradient(45deg, #667eea, #764ba2);
+        background: #e3f2fd; /* لون أزرق فاتح جداً ومتناسق */
         padding: 50px 40px;
         text-align: center;
-        color: white;
+        color: #1565c0; /* لون أزرق داكن للنصوص */
     }
 
     .language-section h2 {
@@ -145,14 +133,14 @@
         transform: translateY(-4px) scale(1.05);
         box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         background: white;
-        border-color: rgba(255, 255, 255, 0.5);
+        border-color: rgba(102, 126, 234, 0.5);
     }
 
     .input-section {
-        background: linear-gradient(45deg, #667eea, #764ba2);
+        background: #e3f2fd; /* لون أزرق فاتح جداً ومتناسق */
         padding: 50px 40px;
         text-align: center;
-        color: white;
+        color: #1565c0; /* لون أزرق داكن للنصوص */
         display: none;
     }
 
@@ -198,7 +186,7 @@
         outline: none;
         transform: translateY(-3px) scale(1.02);
         box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        border-color: rgba(255, 255, 255, 0.5);
+        border-color: rgba(102, 126, 234, 0.5);
         background: white;
     }
 
@@ -257,8 +245,8 @@
     }
 
     .student-info {
-        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-        color: white;
+        background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%); /* لون وردي/بنفسجي فاتح */
+        color: #7b1fa2; /* لون بنفسجي داكن للنصوص */
         padding: 30px;
         border-radius: 20px;
         margin-bottom: 35px;
@@ -491,9 +479,9 @@
         display: inline-block;
         width: 24px;
         height: 24px;
-        border: 3px solid rgba(255,255,255,0.3);
+        border: 3px solid rgba(0,0,0,0.3); /* لون داكن للتحميل على خلفية فاتحة */
         border-radius: 50%;
-        border-top-color: white;
+        border-top-color: #333;
         animation: spin 1s ease-in-out infinite;
         margin-left: 10px;
     }
@@ -581,8 +569,8 @@
 <body>
     <div class="header">
         <div class="logo"></div>
-        <h1 style="color: purple;">🎓 الجدول الدراسي لموديول الفاونديشن (الوافدين)</h1>
-        <p style="color: purple;">✨ اكتشف مواعيد محاضراتك ومختبراتك</p>
+        <h1 style="color: #6a1b9a;">🎓 الجدول الدراسي لموديول الفاونديشن (الوافدين)</h1>
+        <p style="color: #9c27b0;">✨ اكتشف مواعيد محاضراتك ومختبراتك</p>
     </div>
 
 <div class="container">

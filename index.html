@@ -12,7 +12,6 @@
             box-sizing: border-box;
         }
 
-```
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -577,7 +576,6 @@
         }
     }
 </style>
-```
 
 </head>
 <body>
@@ -587,7 +585,6 @@
         <p style="color: purple;">✨ اكتشف مواعيد محاضراتك ومختبراتك</p>
     </div>
 
-```
 <div class="container">
     <div class="language-section" id="languageSection">
         <h2>🌍 اختر لغتك / Choose Your Language</h2>
@@ -602,7 +599,7 @@
     </div>
 
     <div class="input-section" id="inputSection">
-        <h2>🔍 أدخل رقمك الجامعي واختر الأسبوع للحصول على جدولك الشخصي</h2>
+        <h2 id="inputSectionTitle">🔍 أدخل رقمك الجامعي واختر الأسبوع للحصول على جدولك الشخصي</h2>
         <div class="input-group">
             <input type="text" id="studentNumber" placeholder="مثال: ١٢٣٤" minlength="1" maxlength="4">
             <select id="weekSelect">
@@ -630,31 +627,67 @@
         userLanguage = language;
         document.getElementById('languageSection').style.display = 'none';
         
-        if (language === 'non-arabic') {
-            showNonArabicSchedule();
-        } else {
-            document.getElementById('inputSection').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('studentNumber').focus();
-            }, 300);
+        const inputSection = document.getElementById('inputSection');
+        const inputSectionTitle = document.getElementById('inputSectionTitle');
+        const studentNumberInput = document.getElementById('studentNumber');
+        const weekSelect = document.getElementById('weekSelect');
+        const searchBtn = document.getElementById('searchBtn');
+
+        inputSection.style.display = 'block';
+
+        if (language === 'arabic') {
+            inputSectionTitle.innerHTML = '🔍 أدخل رقمك الجامعي واختر الأسبوع للحصول على جدولك الشخصي';
+            studentNumberInput.style.display = 'inline-block';
+            studentNumberInput.placeholder = 'مثال: ١٢٣٤';
+            weekSelect.innerHTML = `
+                <option value="1">📅 الأسبوع الأول</option>
+                <option value="2">📅 الأسبوع الثاني</option>
+                <option value="3">📅 الأسبوع الثالث</option>
+                <option value="4">📅 الأسبوع الرابع</option>
+                <option value="5">📅 الأسبوع الخامس</option>
+                <option value="6">📅 الأسبوع السادس</option>
+                <option value="7">📅 الأسبوع السابع</option>
+            `;
+            searchBtn.innerHTML = '🚀 عرض الجدول';
+            searchBtn.onclick = getSchedule;
+            setTimeout(() => { studentNumberInput.focus(); }, 300);
+        } else { // non-arabic
+            inputSectionTitle.innerHTML = '🔍 Select Your Week to View the Schedule';
+            studentNumberInput.style.display = 'none';
+            weekSelect.innerHTML = `
+                <option value="1">📅 Week 1</option>
+                <option value="2">📅 Week 2</option>
+                <option value="3">📅 Week 3</option>
+                <option value="4">📅 Week 4</option>
+                <option value="5">📅 Week 5</option>
+                <option value="6">📅 Week 6</option>
+                <option value="7">📅 Week 7</option>
+            `;
+            searchBtn.innerHTML = '🚀 View Schedule';
+            searchBtn.onclick = showNonArabicSchedule;
         }
     }
 
     function showNonArabicSchedule() {
+        const selectedWeek = document.getElementById('weekSelect').value;
         const resultDiv = document.getElementById('result');
-        resultDiv.innerHTML = `
-            <div class="student-info">
-                <h3>🎯 Non-Arabic Speakers - Group F</h3>
-                <p><strong>المجموعة:</strong> F | <strong>السكشن:</strong> Section (Non-Arabic speakers)</p>
-            </div>
 
-            <div class="schedule-section lab-section">
-                <div class="section-title">
-                    🧪 جدول المختبرات العملية - Practical Schedule
-                </div>
-                <div class="schedule-grid">
+        let labScheduleHTML = '';
+        let lectureScheduleHTML = '';
+
+        // Store original button state to restore after loading
+        const originalBtnHTML = document.getElementById('searchBtn').innerHTML; 
+        document.getElementById('searchBtn').innerHTML = 'Searching... <div class="loading"></div>';
+        document.getElementById('searchBtn').disabled = true;
+
+        setTimeout(() => { // Simulate load time
+            
+            let finalHTML = '';
+
+            if (selectedWeek === '1') {
+                labScheduleHTML = `
                     <div class="schedule-day">
-                        <div class="day-title">📅 الإثنين 2025/10/13 - Monday</div>
+                        <div class="day-title">📅 Monday 2025/10/13</div>
                         <div class="lecture">
                             <span class="lecture-name">🔬 Practical (1): Lab safety & Physical biochemistry</span>
                             <div class="time-location">
@@ -663,16 +696,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="schedule-section">
-                <div class="section-title">
-                    📚 جدول المحاضرات النظرية - Lecture Schedule
-                </div>
-                <div class="schedule-grid">
+                `;
+                
+                lectureScheduleHTML = `
                     <div class="schedule-day">
-                        <div class="day-title">📅 الثلاثاء 2025/10/14 - Tuesday</div>
+                        <div class="day-title">📅 Tuesday 2025/10/14</div>
                         <div class="lecture">
                             <span class="lecture-name">🔬 Lecture 2: Cell membrane structure (Histology 1)</span>
                             <div class="time-location">
@@ -697,7 +725,7 @@
                     </div>
 
                     <div class="schedule-day">
-                        <div class="day-title">📅 الأربعاء 2025/10/15 - Wednesday</div>
+                        <div class="day-title">📅 Wednesday 2025/10/15</div>
                         <div class="lecture">
                             <span class="lecture-name">🔄 Lecture 5: Membrane Transport 2 (Physiology 2)</span>
                             <div class="time-location">
@@ -722,7 +750,7 @@
                     </div>
 
                     <div class="schedule-day">
-                        <div class="day-title">📅 الخميس 2025/10/16 - Thursday</div>
+                        <div class="day-title">📅 Thursday 2025/10/16</div>
                         <div class="lecture">
                             <span class="lecture-name">🎯 Lecture 8: Functional Organization of Human Body (Physiology 3)</span>
                             <div class="time-location">
@@ -745,19 +773,199 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                `;
 
-            <div class="success-message">
-                <p>✅ You have been assigned to Group F!</p>
-                <p>🔔 Please save this schedule for future reference</p>
-                <button class="back-button" onclick="goBack()">
-                    ⬅️ العودة للصفحة الرئيسية - Back to Home
-                </button>
-            </div>
-        `;
-        resultDiv.style.display = 'block';
+                finalHTML = `
+                    <div class="student-info">
+                        <h3>🎯 Non-Arabic Speakers - Group F - ${getWeekName(selectedWeek)}</h3>
+                        <p><strong>Group:</strong> F | <strong>Section:</strong> Non-Arabic Speakers</p>
+                    </div>
+
+                    <div class="schedule-section lab-section">
+                        <div class="section-title">
+                            🧪 Practical Schedule
+                        </div>
+                        <div class="schedule-grid">
+                            ${labScheduleHTML}
+                        </div>
+                    </div>
+
+                    <div class="schedule-section">
+                        <div class="section-title">
+                            📚 Lecture Schedule
+                        </div>
+                        <div class="schedule-grid">
+                            ${lectureScheduleHTML}
+                        </div>
+                    </div>
+
+                    <div class="success-message">
+                        <p>✅ You have been assigned to Group F!</p>
+                        <p>🔔 Please save this schedule for future reference</p>
+                        <button class="back-button" onclick="goBack()">
+                            ⬅️ Back to Home
+                        </button>
+                    </div>
+                `;
+
+            } else if (selectedWeek === '2') {
+                labScheduleHTML = `
+                    <div class="schedule-day">
+                        <div class="day-title">📅 Monday 2025/10/20</div>
+                        <div class="lecture">
+                            <span class="lecture-name">🔬 Practical (Lab): Microscopy & Cell Membrane (Histology)</span>
+                            <div class="time-location">
+                                <span class="time">11:15 - 12:30</span>
+                                <span class="location">🏢 Lab 6</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                lectureScheduleHTML = `
+                    <div class="schedule-day">
+                        <div class="day-title">📅 Tuesday 2025/10/21</div>
+                        <div class="lecture">
+                            <span class="lecture-name">🧬 Lecture 10 – (Structure I: Carbohydrates) (Biochemistry)</span>
+                            <div class="time-location">
+                                <span class="time">11:00-12:00</span>
+                                <span class="location">🏢 Hall 6</span>
+                            </div>
+                        </div>
+                        <div class="lecture">
+                            <span class="lecture-name">🔬 Lecture 11 – (Histology: Cell Organelles 2)</span>
+                            <div class="time-location">
+                                <span class="time">12:00-1:00</span>
+                                <span class="location">🏢 Hall 6</span>
+                            </div>
+                        </div>
+                        <div class="lecture">
+                            <span class="lecture-name">⚡ Lecture 12 – (Physiology: Homeostasis)</span>
+                            <div class="time-location">
+                                <span class="time">1:00-2:00</span>
+                                <span class="location">🏢 Hall 6</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="schedule-day">
+                        <div class="day-title">📅 Wednesday 2025/10/22</div>
+                        <div class="lecture">
+                            <span class="lecture-name">🍯 Lecture 13 – (Biochemistry: Lipid Structure 1)</span>
+                            <div class="time-location">
+                                <span class="time">11:00-12:00</span>
+                                <span class="location">🏢 Hall 5</span>
+                            </div>
+                        </div>
+                        <div class="lecture">
+                            <span class="lecture-name">📦 Lecture 14 – (Histology: Cell Organelles 3)</span>
+                            <div class="time-location">
+                                <span class="time">12:00-1:00</span>
+                                <span class="location">🏢 Hall 6</span>
+                            </div>
+                        </div>
+                        <div class="lecture">
+                            <span class="lecture-name">🔄 Lecture 15 – (Histology: Cytoskeleton 1)</span>
+                            <div class="time-location">
+                                <span class="time">1:00-2:00</span>
+                                <span class="location">🏢 Hall 6</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="schedule-day">
+                        <div class="day-title">📅 Thursday 2025/10/23</div>
+                        <div class="lecture">
+                            <span class="lecture-name">🎯 Lecture 17 – (Histology: Nucleus)</span>
+                            <div class="time-location">
+                                <span class="time">11:00-12:00</span>
+                                <span class="location">🏢 Hall 5</span>
+                            </div>
+                        </div>
+                        <div class="lecture">
+                            <span class="lecture-name">🏭 Lecture 18 – (Biochemistry: Lipid Structure 2)</span>
+                            <div class="time-location">
+                                <span class="time">12:00-1:00</span>
+                                <span class="location">🏢 Hall 6</span>
+                            </div>
+                        </div>
+                        <div class="lecture">
+                            <span class="lecture-name">⚗️ Lecture 19 – (Biochemistry: Lipid Structure 3)</span>
+                            <div class="time-location">
+                                <span class="time">1:00-2:00</span>
+                                <span class="location">🏢 Hall 6</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                finalHTML = `
+                    <div class="student-info">
+                        <h3>🎯 Non-Arabic Speakers - Group F - ${getWeekName(selectedWeek)}</h3>
+                        <p><strong>Group:</strong> F | <strong>Section:</strong> Non-Arabic Speakers</p>
+                    </div>
+
+                    <div class="schedule-section lab-section">
+                        <div class="section-title">
+                            🧪 Practical Schedule
+                        </div>
+                        <div class="schedule-grid">
+                            ${labScheduleHTML}
+                        </div>
+                    </div>
+
+                    <div class="schedule-section">
+                        <div class="section-title">
+                            📚 Lecture Schedule
+                        </div>
+                        <div class="schedule-grid">
+                            ${lectureScheduleHTML}
+                        </div>
+                    </div>
+
+                    <div class="success-message">
+                        <p>✅ You have been assigned to Group F!</p>
+                        <p>🔔 Please save this schedule for future reference</p>
+                        <button class="back-button" onclick="goBack()">
+                            ⬅️ Back to Home
+                        </button>
+                    </div>
+                `;
+
+            } else {
+                // Logic for unavailable weeks (3-7) in English
+                finalHTML = `
+                    <div class="student-info">
+                        <h3>🎯 Non-Arabic Speakers - Group F - ${getWeekName(selectedWeek)}</h3>
+                        <p><strong>Group:</strong> F | <strong>Section:</strong> Non-Arabic Speakers</p>
+                    </div>
+                    <div class="error">
+                        📅 Schedule data for ${getWeekName(selectedWeek)} is not yet available
+                        <br><small style="opacity: 0.8; margin-top: 10px; display: block;">Data will be added soon. Please check back later.</small>
+                        <br><button class="back-button" onclick="goBack()" style="margin-top: 20px;">
+                            ⬅️ Back to Home
+                        </button>
+                    </div>
+                `;
+            }
+            
+            resultDiv.innerHTML = finalHTML;
+            resultDiv.style.display = 'block';
+
+            // Restore button state
+            document.getElementById('searchBtn').innerHTML = originalBtnHTML;
+            document.getElementById('searchBtn').disabled = false;
+
+            setTimeout(() => {
+                resultDiv.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 200);
+
+        }, 800);
     }
+
 
     function convertToArabicNumbers(str) {
         const arabicNumbers = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
@@ -806,35 +1014,65 @@
         return halls[group];
     }
 
-    function getLabSchedule(section) {
-        const labSchedules = {
-            13: { day: 'السبت 2025/10/11', time: '8:00 - 9:30' },
-            14: { day: 'السبت 2025/10/11', time: '9:30 - 11:00' },
-            15: { day: 'السبت 2025/10/11', time: '11:00 - 12:30' },
-            16: { day: 'السبت 2025/10/11', time: '12:30 - 2:00' },
-            17: { day: 'الأحد 2025/10/12', time: '11:00 - 12:30' },
-            18: { day: 'الأحد 2025/10/12', time: '12:30 - 2:00' },
-            19: { day: 'الأحد 2025/10/12', time: '2:00 - 3:30' },
-            20: { day: 'الأحد 2025/10/12', time: '3:30 - 5:00' },
-            21: { day: 'الإثنين 2025/10/13', time: '8:00 - 9:30' },
-            22: { day: 'الإثنين 2025/10/13', time: '9:30 - 11:00' }
-        };
-        return labSchedules[section];
+    function getLabSchedule(section, week) {
+        if (week === '1') {
+            const labSchedulesWeek1 = {
+                13: { day: 'السبت 2025/10/11', time: '8:00 - 9:30', location: 'Lab 9' },
+                14: { day: 'السبت 2025/10/11', time: '9:30 - 11:00', location: 'Lab 9' },
+                15: { day: 'السبت 2025/10/11', time: '11:00 - 12:30', location: 'Lab 9' },
+                16: { day: 'السبت 2025/10/11', time: '12:30 - 2:00', location: 'Lab 9' },
+                17: { day: 'الأحد 2025/10/12', time: '11:00 - 12:30', location: 'Lab 9' },
+                18: { day: 'الأحد 2025/10/12', time: '12:30 - 2:00', location: 'Lab 9' },
+                19: { day: 'الأحد 2025/10/12', time: '2:00 - 3:30', location: 'Lab 9' },
+                20: { day: 'الأحد 2025/10/12', time: '3:30 - 5:00', location: 'Lab 9' },
+                21: { day: 'الإثنين 2025/10/13', time: '8:00 - 9:30', location: 'Lab 9' },
+                22: { day: 'الإثنين 2025/10/13', time: '9:30 - 11:00', location: 'Lab 9' }
+            };
+            return labSchedulesWeek1[section];
+        } else if (week === '2') {
+            const labSchedulesWeek2 = {
+                13: { day: 'الأحد 2025/10/19', time: '12:30 - 2:00', location: 'Lab 7' },
+                14: { day: 'الاثنين 2025/10/20', time: '12:30 - 2:00', location: 'Lab 7' },
+                15: { day: 'السبت 2025/10/18', time: '12:30 - 2:00', location: 'Lab 7' },
+                16: { day: 'الأحد 2025/10/19', time: '11:15 - 12:30', location: 'Lab 7' },
+                17: { day: 'الاثنين 2025/10/20', time: '11:15 - 12:30', location: 'Lab 7' },
+                18: { day: 'السبت 2025/10/18', time: '11:15 - 12:30', location: 'Lab 7' },
+                19: { day: 'السبت 2025/10/18', time: '8:30 - 9:30', location: 'Lab 7' }, /* Group 24 - but section 19 is 361-420, which is not 24. Assuming it's based on section ID */
+                20: { day: 'الاثنين 2025/10/20', time: '9:30 - 11:00', location: 'Lab 7' },
+                21: { day: 'الأحد 2025/10/19', time: '8:30 - 9:30', location: 'Lab 7' }, /* Assuming Section 21 = Group 27 */
+                22: { day: 'الاثنين 2025/10/20', time: '8:30 - 9:30', location: 'Lab 7' } /* Assuming Section 22 = Group 23 */
+            };
+            return labSchedulesWeek2[section];
+        }
+        return null;
     }
 
-    function showLoading() {
+    function showLoading(language) {
         const btn = document.getElementById('searchBtn');
-        btn.innerHTML = '🔍 جاري البحث... <div class="loading"></div>';
+        btn.innerHTML = language === 'arabic' ? '🔍 جاري البحث... <div class="loading"></div>' : 'Searching... <div class="loading"></div>';
         btn.disabled = true;
     }
 
-    function hideLoading() {
+    function hideLoading(language) {
         const btn = document.getElementById('searchBtn');
-        btn.innerHTML = '🚀 عرض الجدول';
+        btn.innerHTML = language === 'arabic' ? '🚀 عرض الجدول' : '🚀 View Schedule';
         btn.disabled = false;
     }
 
     function getWeekName(weekNumber) {
+        if (userLanguage === 'non-arabic') {
+            const weekNames = {
+                '1': 'Week 1',
+                '2': 'Week 2', 
+                '3': 'Week 3',
+                '4': 'Week 4',
+                '5': 'Week 5',
+                '6': 'Week 6',
+                '7': 'Week 7'
+            };
+            return weekNames[weekNumber] || 'Selected Week';
+        }
+        
         const weekNames = {
             '1': 'الأسبوع الأول',
             '2': 'الأسبوع الثاني', 
@@ -844,7 +1082,7 @@
             '6': 'الأسبوع السادس',
             '7': 'الأسبوع السابع'
         };
-        return weekNames[weekNumber] || 'الأسبوع الأول';
+        return weekNames[weekNumber] || 'الأسبوع المحدد';
     }
 
     function getSchedule() {
@@ -867,13 +1105,13 @@
             return;
         }
 
-        showLoading();
+        showLoading('arabic');
 
         setTimeout(() => {
             const group = getGroup(number);
             const section = getSection(number);
             const hall = getHall(group);
-            const labSchedule = getLabSchedule(section);
+            const labSchedule = getLabSchedule(section, selectedWeek);
 
             let html = '';
 
@@ -896,7 +1134,7 @@
                                     <span class="lecture-name">🔬 Practical (1): Lab safety & Physical biochemistry</span>
                                     <div class="time-location">
                                         <span class="time">` + labSchedule.time + `</span>
-                                        <span class="location">🏢 Lab 9</span>
+                                        <span class="location">🏢 ` + labSchedule.location + `</span>
                                     </div>
                                 </div>
                             </div>
@@ -994,7 +1232,127 @@
                         </button>
                     </div>
                 `;
-            } else {
+            } else if (selectedWeek === '2') {
+                 // Logic for Week 2
+                html = `
+                    <div class="student-info">
+                        <h3>🎯 معلومات الطالب رقم ` + number + `</h3>
+                        <p><strong>المجموعة:</strong> ` + group + ` | <strong>السكشن:</strong> ` + section + ` | <strong>الأسبوع:</strong> الثاني</p>
+                    </div>
+
+                    ` + (labSchedule ? `
+                    <div class="schedule-section lab-section">
+                        <div class="section-title">
+                            🧪 جدول المختبرات العملية
+                        </div>
+                        <div class="schedule-grid">
+                            <div class="schedule-day">
+                                <div class="day-title">📅 ` + labSchedule.day + `</div>
+                                <div class="lecture">
+                                    <span class="lecture-name">🔬 Practical (Lab): Microscopy & Cell Membrane (Histology)</span>
+                                    <div class="time-location">
+                                        <span class="time">` + labSchedule.time + `</span>
+                                        <span class="location">🏢 ` + labSchedule.location + `</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ` : '') + `
+
+                    <div class="schedule-section">
+                        <div class="section-title">
+                            📚 جدول المحاضرات النظرية
+                        </div>
+                        <div class="schedule-grid">
+                            <div class="schedule-day">
+                                <div class="day-title">📅 الثلاثاء 2025/10/21</div>
+                                <div class="lecture">
+                                    <span class="lecture-name">🧬 Lecture 10 – (Structure I: Carbohydrates) (Biochemistry)</span>
+                                    <div class="time-location">
+                                        <span class="time">` + (group === 'D' ? '11:00-12:00' : '1:00-2:00') + `</span>
+                                        <span class="location">🏢 ` + (group === 'D' ? 'Hall 4' : 'Hall 5') + `</span>
+                                    </div>
+                                </div>
+                                <div class="lecture">
+                                    <span class="lecture-name">🔬 Lecture 11 – (Histology: Cell Organelles 2)</span>
+                                    <div class="time-location">
+                                        <span class="time">` + (group === 'D' ? '12:00-1:00' : '11:00-12:00') + `</span>
+                                        <span class="location">🏢 ` + (group === 'D' ? 'Hall 4' : 'Hall 5') + `</span>
+                                    </div>
+                                </div>
+                                <div class="lecture">
+                                    <span class="lecture-name">⚡ Lecture 12 – (Physiology: Homeostasis)</span>
+                                    <div class="time-location">
+                                        <span class="time">` + (group === 'D' ? '1:00-2:00' : '12:00-1:00') + `</span>
+                                        <span class="location">🏢 ` + (group === 'D' ? 'Hall 4' : 'Hall 5') + `</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="schedule-day">
+                                <div class="day-title">📅 الأربعاء 2025/10/22</div>
+                                <div class="lecture">
+                                    <span class="lecture-name">🍯 Lecture 13 – (Biochemistry: Lipid Structure 1)</span>
+                                    <div class="time-location">
+                                        <span class="time">11:00-12:00</span>
+                                        <span class="location">🏢 Hall 4</span>
+                                    </div>
+                                </div>
+                                <div class="lecture">
+                                    <span class="lecture-name">📦 Lecture 14 – (Histology: Cell Organelles 3)</span>
+                                    <div class="time-location">
+                                        <span class="time">12:00-1:00</span>
+                                        <span class="location">🏢 Hall 4</span>
+                                    </div>
+                                </div>
+                                <div class="lecture">
+                                    <span class="lecture-name">🔄 Lecture 15 – (Histology: Cytoskeleton 1)</span>
+                                    <div class="time-location">
+                                        <span class="time">1:00-2:00</span>
+                                        <span class="location">🏢 Hall 4</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="schedule-day">
+                                <div class="day-title">📅 الخميس 2025/10/23</div>
+                                <div class="lecture">
+                                    <span class="lecture-name">🎯 Lecture 17 – (Histology: Nucleus)</span>
+                                    <div class="time-location">
+                                        <span class="time">11:00-12:00</span>
+                                        <span class="location">🏢 Hall 4</span>
+                                    </div>
+                                </div>
+                                <div class="lecture">
+                                    <span class="lecture-name">🏭 Lecture 18 – (Biochemistry: Lipid Structure 2)</span>
+                                    <div class="time-location">
+                                        <span class="time">12:00-1:00</span>
+                                        <span class="location">🏢 Hall 4</span>
+                                    </div>
+                                </div>
+                                <div class="lecture">
+                                    <span class="lecture-name">⚗️ Lecture 19 – (Biochemistry: Lipid Structure 3)</span>
+                                    <div class="time-location">
+                                        <span class="time">1:00-2:00</span>
+                                        <span class="location">🏢 Hall 4</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="success-message">
+                        <p>✅ تم إنشاء جدولك الشخصي بنجاح!</p>
+                        <p>🔔 لا تنس حفظ هذه المعلومات أو أخذ لقطة شاشة للرجوع إليها لاحقاً</p>
+                        <button class="back-button" onclick="goBack()">
+                            ⬅️ العودة للبحث مرة أخرى
+                        </button>
+                    </div>
+                `;
+            } 
+            else {
+                // Default error for unavailable weeks (3-7) - Arabic
                 html = `
                     <div class="student-info">
                         <h3>🎯 معلومات الطالب رقم ` + number + `</h3>
@@ -1013,7 +1371,7 @@
 
             resultDiv.innerHTML = html;
             resultDiv.style.display = 'block';
-            hideLoading();
+            hideLoading('arabic');
             
             setTimeout(() => {
                 resultDiv.scrollIntoView({ 
@@ -1037,9 +1395,29 @@
         document.getElementById('studentNumber').value = '';
         document.getElementById('weekSelect').value = '1';
         userLanguage = '';
+        
+        // Reset input section elements to default Arabic state
+        const inputSectionTitle = document.getElementById('inputSectionTitle');
+        const studentNumberInput = document.getElementById('studentNumber');
+        const weekSelect = document.getElementById('weekSelect');
+        const searchBtn = document.getElementById('searchBtn');
+
+        inputSectionTitle.innerHTML = '🔍 أدخل رقمك الجامعي واختر الأسبوع للحصول على جدولك الشخصي';
+        studentNumberInput.style.display = 'inline-block';
+        studentNumberInput.placeholder = 'مثال: ١٢٣٤';
+        weekSelect.innerHTML = `
+            <option value="1">📅 الأسبوع الأول</option>
+            <option value="2">📅 الأسبوع الثاني</option>
+            <option value="3">📅 الأسبوع الثالث</option>
+            <option value="4">📅 الأسبوع الرابع</option>
+            <option value="5">📅 الأسبوع الخامس</option>
+            <option value="6">📅 الأسبوع السادس</option>
+            <option value="7">📅 الأسبوع السابع</option>
+        `;
+        searchBtn.innerHTML = '🚀 عرض الجدول';
+        searchBtn.onclick = getSchedule;
     }
 </script>
-```
 
 </body>
 </html>

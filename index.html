@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -96,7 +95,8 @@
     }
 
     .language-section {
-        background: #e3f2fd; /* لون أزرق فاتح جداً ومتناسق */
+        background: #e3f2fd;
+        /* لون أزرق فاتح جداً ومتناسق */
         padding: 50px 40px;
         text-align: center;
         color: #1565c0; /* لون أزرق داكن للنصوص */
@@ -137,7 +137,8 @@
     }
 
     .input-section {
-        background: #e3f2fd; /* لون أزرق فاتح جداً ومتناسق */
+        background: #e3f2fd;
+        /* لون أزرق فاتح جداً ومتناسق */
         padding: 50px 40px;
         text-align: center;
         color: #1565c0; /* لون أزرق داكن للنصوص */
@@ -245,8 +246,10 @@
     }
 
     .student-info {
-        background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%); /* لون وردي/بنفسجي فاتح */
-        color: #7b1fa2; /* لون بنفسجي داكن للنصوص */
+        background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+        /* لون وردي/بنفسجي فاتح */
+        color: #7b1fa2;
+        /* لون بنفسجي داكن للنصوص */
         padding: 30px;
         border-radius: 20px;
         margin-bottom: 35px;
@@ -664,7 +667,7 @@
         let lectureScheduleHTML = '';
 
         // Store original button state to restore after loading
-        const originalBtnHTML = document.getElementById('searchBtn').innerHTML; 
+        const originalBtnHTML = document.getElementById('searchBtn').innerHTML;
         document.getElementById('searchBtn').innerHTML = 'Searching... <div class="loading"></div>';
         document.getElementById('searchBtn').disabled = true;
 
@@ -978,22 +981,24 @@
     }
 
     function getGroup(number) {
-        if (number >= 1 && number <= 300) return 'D';
-        if (number >= 301 && number <= 2000) return 'E';
+        if (number >= 1 && number <= 480) return 'D';
+        if (number >= 481 && number <= 2000) return 'E';
         return null;
     }
 
     function getSection(number) {
-        if (number >= 1 && number <= 60) return 13;
-        if (number >= 61 && number <= 120) return 14;
-        if (number >= 121 && number <= 180) return 15;
-        if (number >= 181 && number <= 240) return 16;
-        if (number >= 241 && number <= 300) return 17;
-        if (number >= 301 && number <= 360) return 18;
-        if (number >= 361 && number <= 420) return 19;
-        if (number >= 421 && number <= 480) return 20;
-        if (number >= 481 && number <= 540) return 21;
-        if (number >= 541 && number <= 2000) return 22;
+        if (number >= 1 && number <= 80) return 13;
+        if (number >= 81 && number <= 160) return 14;
+        if (number >= 161 && number <= 240) return 15;
+        if (number >= 241 && number <= 320) return 16;
+        if (number >= 321 && number <= 400) return 17;
+        if (number >= 401 && number <= 480) return 18;
+        if (number >= 481 && number <= 560) return 19;
+        if (number >= 561 && number <= 640) return 20;
+        if (number >= 641 && number <= 720) return 21;
+        if (number >= 721 && number <= 800) return 22;
+        if (number >= 801 && number <= 880) return 23;
+        if (number >= 881 && number <= 2000) return 24;
         return null;
     }
 
@@ -1050,24 +1055,15 @@
     function getWeekName(weekNumber) {
         if (userLanguage === 'non-arabic') {
             const weekNames = {
-                '1': 'Week 1',
-                '2': 'Week 2', 
-                '3': 'Week 3',
-                '4': 'Week 4',
-                '5': 'Week 5',
-                '6': 'Week 6',
-                '7': 'Week 7'
+                '1': 'Week 1', '2': 'Week 2', '3': 'Week 3', '4': 'Week 4',
+                '5': 'Week 5', '6': 'Week 6', '7': 'Week 7'
             };
             return weekNames[weekNumber] || 'Selected Week';
         }
         
         const weekNames = {
-            '1': 'الأسبوع الأول',
-            '2': 'الأسبوع الثاني', 
-            '3': 'الأسبوع الثالث',
-            '4': 'الأسبوع الرابع',
-            '5': 'الأسبوع الخامس',
-            '6': 'الأسبوع السادس',
+            '1': 'الأسبوع الأول', '2': 'الأسبوع الثاني', '3': 'الأسبوع الثالث',
+            '4': 'الأسبوع الرابع', '5': 'الأسبوع الخامس', '6': 'الأسبوع السادس',
             '7': 'الأسبوع السابع'
         };
         return weekNames[weekNumber] || 'الأسبوع المحدد';
@@ -1079,7 +1075,7 @@
         const convertedValue = convertFromArabicNumbers(inputValue);
         const number = parseInt(convertedValue);
         const resultDiv = document.getElementById('result');
-        
+
         if (!number || number < 1 || number > 2000) {
             resultDiv.innerHTML = `
                 <div class="error">
@@ -1220,6 +1216,7 @@
                         </button>
                     </div>
                 `;
+
             } else if (selectedWeek === '2') {
                  // Logic for Week 2
                 html = `
@@ -1338,6 +1335,7 @@
                         </button>
                     </div>
                 `;
+
             } 
             else {
                 // Default error for unavailable weeks (3-7) - Arabic
@@ -1360,13 +1358,14 @@
             resultDiv.innerHTML = html;
             resultDiv.style.display = 'block';
             hideLoading('arabic');
-            
+
             setTimeout(() => {
                 resultDiv.scrollIntoView({ 
                     behavior: 'smooth', 
                     block: 'start' 
                 });
             }, 200);
+
         }, 800);
     }
 

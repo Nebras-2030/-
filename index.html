@@ -746,7 +746,7 @@
                             <span class="lecture-name">🎯 Lecture 8: Functional Organization of Human Body (Physiology 3)</span>
                             <div class="time-location">
                                 <span class="time">11:00-12:00</span>
-                                <span class="location">🏢 Hall 6 المواساه</span>
+                            <span class="location">🏢 Hall 6 المواساه</span>
                             </div>
                         </div>
                         <div class="lecture">
@@ -800,38 +800,40 @@
                 `;
 
             } else if (selectedWeek === '2') {
+                // NEW Non-Arabic Lab Schedule for Week 2
                 labScheduleHTML = `
                     <div class="schedule-day">
                         <div class="day-title">📅 Monday 2025/10/20</div>
                         <div class="lecture">
                             <span class="lecture-name">🔬 Practical (Lab): Microscopy & Cell Membrane (Histology)</span>
                             <div class="time-location">
-                                <span class="time">11:15 - 12:30</span>
+                                <span class="time">11:00 - 12:30</span>
                                 <span class="location">🏢 Lab 6</span>
                             </div>
                         </div>
                     </div>
                 `;
 
+                // NEW Non-Arabic Lecture Schedule for Week 2
                 lectureScheduleHTML = `
                     <div class="schedule-day">
                         <div class="day-title">📅 Tuesday 2025/10/21</div>
                         <div class="lecture">
-                            <span class="lecture-name">🧬 Lecture 10 – (Structure I: Carbohydrates) (Biochemistry)</span>
+                            <span class="lecture-name">⚡ Lecture 12 – (Physiology: Homeostasis)</span>
                             <div class="time-location">
                                 <span class="time">11:00-12:00</span>
                                 <span class="location">🏢 Hall 6</span>
                             </div>
                         </div>
                         <div class="lecture">
-                            <span class="lecture-name">🔬 Lecture 11 – (Histology: Cell Organelles 2)</span>
+                            <span class="lecture-name">🧬 Lecture 10 – (Structure I: Carbohydrates) (Biochemistry)</span>
                             <div class="time-location">
                                 <span class="time">12:00-1:00</span>
                                 <span class="location">🏢 Hall 6</span>
                             </div>
                         </div>
                         <div class="lecture">
-                            <span class="lecture-name">⚡ Lecture 12 – (Physiology: Homeostasis)</span>
+                            <span class="lecture-name">🔬 Lecture 11 – (Histology: Cell Organelles 2)</span>
                             <div class="time-location">
                                 <span class="time">1:00-2:00</span>
                                 <span class="location">🏢 Hall 6</span>
@@ -862,7 +864,14 @@
                                 <span class="location">🏢 Hall 6</span>
                             </div>
                         </div>
-                    </div>
+                        <div class="lecture">
+                            <span class="lecture-name">🎬 Lecture 16: Cytoskeleton 2 + cell inclusion (Histology 7)</span>
+                            <div class="time-location">
+                                <span class="time">RECORDED</span>
+                                <span class="location">🌐 Portal</span>
+                            </div>
+                        </div>
+                        </div>
 
                     <div class="schedule-day">
                         <div class="day-title">📅 Thursday 2025/10/23</div>
@@ -993,12 +1002,11 @@
         if (number >= 241 && number <= 320) return 16;
         if (number >= 321 && number <= 400) return 17;
         if (number >= 401 && number <= 480) return 18;
-        if (number >= 481 && number <= 560) return 19;
-        if (number >= 561 && number <= 640) return 20;
-        if (number >= 641 && number <= 720) return 21;
-        if (number >= 721 && number <= 800) return 22;
-        if (number >= 801 && number <= 880) return 23;
-        if (number >= 881 && number <= 2000) return 24;
+        if (number >= 481 && number <= 560) return 19; // Changed 19 from the original logic to align with new E group structure (481-560)
+        if (number >= 561 && number <= 640) return 20; // Changed 20
+        if (number >= 641 && number <= 720) return 21; // Changed 21
+        if (number >= 721 && number <= 800) return 22; // Changed 22
+        if (number >= 801 && number <= 2000) return 24; // Adjusted to capture remaining E students (24 for 801+)
         return null;
     }
 
@@ -1023,17 +1031,20 @@
             };
             return labSchedulesWeek1[section];
         } else if (week === '2') {
+            // NEW Lab Schedule for Week 2 (Sections 13-22, 24)
             const labSchedulesWeek2 = {
-                13: { day: 'الأحد 2025/10/19', time: '12:30 - 2:00', location: 'Lab 7' },
-                14: { day: 'الاثنين 2025/10/20', time: '12:30 - 2:00', location: 'Lab 7' },
+                24: { day: 'السبت 2025/10/18', time: '8:00 - 9:30', location: 'Lab 7' },
+                21: { day: 'السبت 2025/10/18', time: '9:30 - 11:00', location: 'Lab 7' },
+                18: { day: 'السبت 2025/10/18', time: '11:00 - 12:30', location: 'Lab 7' },
                 15: { day: 'السبت 2025/10/18', time: '12:30 - 2:00', location: 'Lab 7' },
-                16: { day: 'الأحد 2025/10/19', time: '11:15 - 12:30', location: 'Lab 7' },
-                17: { day: 'الاثنين 2025/10/20', time: '11:15 - 12:30', location: 'Lab 7' },
-                18: { day: 'السبت 2025/10/18', time: '11:15 - 12:30', location: 'Lab 7' },
-                19: { day: 'السبت 2025/10/18', time: '8:30 - 9:30', location: 'Lab 7' }, /* Group 24 - but section 19 is 361-420, which is not 24. Assuming it's based on section ID */
+                22: { day: 'الأحد 2025/10/19', time: '11:00 - 12:30', location: 'Lab 7' },
+                19: { day: 'الأحد 2025/10/19', time: '12:30 - 2:00', location: 'Lab 7' },
+                16: { day: 'الأحد 2025/10/19', time: '2:00 - 3:30', location: 'Lab 7' },
+                13: { day: 'الأحد 2025/10/19', time: '3:30 - 5:00', location: 'Lab 7' },
+                // Section 23 is NOT in the new list, so 19 is used for the range 481-560
                 20: { day: 'الاثنين 2025/10/20', time: '9:30 - 11:00', location: 'Lab 7' },
-                21: { day: 'الأحد 2025/10/19', time: '8:30 - 9:30', location: 'Lab 7' }, /* Assuming Section 21 = Group 27 */
-                22: { day: 'الاثنين 2025/10/20', time: '8:30 - 9:30', location: 'Lab 7' } /* Assuming Section 22 = Group 23 */
+                17: { day: 'الاثنين 2025/10/20', time: '11:00 - 12:30', location: 'Lab 7' },
+                14: { day: 'الاثنين 2025/10/20', time: '12:30 - 2:00', location: 'Lab 7' }
             };
             return labSchedulesWeek2[section];
         }
@@ -1086,6 +1097,7 @@
                     </button>
                 </div>`;
             resultDiv.style.display = 'block';
+            hideLoading('arabic');
             return;
         }
 
@@ -1218,32 +1230,60 @@
                 `;
 
             } else if (selectedWeek === '2') {
-                 // Logic for Week 2
+                // Determine specific halls for Group E's Wednesday and Thursday lectures (Overriding Hall 5)
+                const hall4 = 'Hall 4';
+                const hall5 = 'Hall 5';
+
+                // Helper function to get Hall for Group E based on the new specific rules
+                function getEHall(day, time) {
+                    if (group !== 'E') return hall4; // D always uses Hall 4 for these
+
+                    // E-specific Hall overrides for Wednesday and Thursday
+                    if (day === 'Wednesday') {
+                        if (time === '1:00-2:00') return hall4; // Lecture 13
+                        if (time === '11:00-12:00') return hall4; // Lecture 14
+                        if (time === '12:00-1:00') return hall4; // Lecture 15
+                    } else if (day === 'Thursday') {
+                        if (time === '1:00-2:00') return hall4; // Lecture 17
+                        if (time === '11:00-12:00') return hall4; // Lecture 18
+                        if (time === '12:00-1:00') return hall4; // Lecture 19
+                    }
+                    return hall5; // Default for E group in Week 2, Tuesday
+                }
+
+                // Lab Schedule for Week 2
+                let labSectionScheduleHTML = '';
+                if (labSchedule) {
+                    labSectionScheduleHTML = `
+                        <div class="schedule-section lab-section">
+                            <div class="section-title">
+                                🧪 جدول المختبرات العملية
+                            </div>
+                            <div class="schedule-grid">
+                                <div class="schedule-day">
+                                    <div class="day-title">📅 ${labSchedule.day}</div>
+                                    <div class="lecture">
+                                        <span class="lecture-name">🔬 Practical (Lab): Microscopy & Cell Membrane (Histology)</span>
+                                        <div class="time-location">
+                                            <span class="time">${labSchedule.time}</span>
+                                            <span class="location">🏢 ${labSchedule.location}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+
+                // Lecture Schedule for Week 2
                 html = `
                     <div class="student-info">
                         <h3>🎯 معلومات الطالب رقم ` + number + `</h3>
                         <p><strong>المجموعة:</strong> ` + group + ` | <strong>السكشن:</strong> ` + section + ` | <strong>الأسبوع:</strong> الثاني</p>
                     </div>
 
-                    ` + (labSchedule ? `
-                    <div class="schedule-section lab-section">
-                        <div class="section-title">
-                            🧪 جدول المختبرات العملية
-                        </div>
-                        <div class="schedule-grid">
-                            <div class="schedule-day">
-                                <div class="day-title">📅 ` + labSchedule.day + `</div>
-                                <div class="lecture">
-                                    <span class="lecture-name">🔬 Practical (Lab): Microscopy & Cell Membrane (Histology)</span>
-                                    <div class="time-location">
-                                        <span class="time">` + labSchedule.time + `</span>
-                                        <span class="location">🏢 ` + labSchedule.location + `</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    ` : '') + `
+                    ${labSectionScheduleHTML}
 
                     <div class="schedule-section">
                         <div class="section-title">
@@ -1256,21 +1296,21 @@
                                     <span class="lecture-name">🧬 Lecture 10 – (Structure I: Carbohydrates) (Biochemistry)</span>
                                     <div class="time-location">
                                         <span class="time">` + (group === 'D' ? '11:00-12:00' : '1:00-2:00') + `</span>
-                                        <span class="location">🏢 ` + (group === 'D' ? 'Hall 4' : 'Hall 5') + `</span>
+                                        <span class="location">🏢 ` + (group === 'D' ? hall4 : hall5) + `</span>
                                     </div>
                                 </div>
                                 <div class="lecture">
                                     <span class="lecture-name">🔬 Lecture 11 – (Histology: Cell Organelles 2)</span>
                                     <div class="time-location">
                                         <span class="time">` + (group === 'D' ? '12:00-1:00' : '11:00-12:00') + `</span>
-                                        <span class="location">🏢 ` + (group === 'D' ? 'Hall 4' : 'Hall 5') + `</span>
+                                        <span class="location">🏢 ` + (group === 'D' ? hall4 : hall5) + `</span>
                                     </div>
                                 </div>
                                 <div class="lecture">
                                     <span class="lecture-name">⚡ Lecture 12 – (Physiology: Homeostasis)</span>
                                     <div class="time-location">
                                         <span class="time">` + (group === 'D' ? '1:00-2:00' : '12:00-1:00') + `</span>
-                                        <span class="location">🏢 ` + (group === 'D' ? 'Hall 4' : 'Hall 5') + `</span>
+                                        <span class="location">🏢 ` + (group === 'D' ? hall4 : hall5) + `</span>
                                     </div>
                                 </div>
                             </div>
@@ -1280,47 +1320,54 @@
                                 <div class="lecture">
                                     <span class="lecture-name">🍯 Lecture 13 – (Biochemistry: Lipid Structure 1)</span>
                                     <div class="time-location">
-                                        <span class="time">11:00-12:00</span>
-                                        <span class="location">🏢 Hall 4</span>
+                                        <span class="time">` + (group === 'D' ? '11:00-12:00' : '1:00-2:00') + `</span>
+                                        <span class="location">🏢 ` + getEHall('Wednesday', '1:00-2:00') + `</span>
                                     </div>
                                 </div>
                                 <div class="lecture">
                                     <span class="lecture-name">📦 Lecture 14 – (Histology: Cell Organelles 3)</span>
                                     <div class="time-location">
-                                        <span class="time">12:00-1:00</span>
-                                        <span class="location">🏢 Hall 4</span>
+                                        <span class="time">` + (group === 'D' ? '12:00-1:00' : '11:00-12:00') + `</span>
+                                        <span class="location">🏢 ` + getEHall('Wednesday', '11:00-12:00') + `</span>
                                     </div>
                                 </div>
                                 <div class="lecture">
                                     <span class="lecture-name">🔄 Lecture 15 – (Histology: Cytoskeleton 1)</span>
                                     <div class="time-location">
-                                        <span class="time">1:00-2:00</span>
-                                        <span class="location">🏢 Hall 4</span>
+                                        <span class="time">` + (group === 'D' ? '1:00-2:00' : '12:00-1:00') + `</span>
+                                        <span class="location">🏢 ` + getEHall('Wednesday', '12:00-1:00') + `</span>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="lecture">
+                                    <span class="lecture-name">🎬 Lecture 16: Cytoskeleton 2+ cell inclusion (Histology 7)</span>
+                                    <div class="time-location">
+                                        <span class="time">مسجلة</span>
+                                        <span class="location">🌐 على البوابة</span>
+                                    </div>
+                                </div>
+                                </div>
 
                             <div class="schedule-day">
                                 <div class="day-title">📅 الخميس 2025/10/23</div>
                                 <div class="lecture">
                                     <span class="lecture-name">🎯 Lecture 17 – (Histology: Nucleus)</span>
                                     <div class="time-location">
-                                        <span class="time">11:00-12:00</span>
-                                        <span class="location">🏢 Hall 4</span>
+                                        <span class="time">` + (group === 'D' ? '11:00-12:00' : '1:00-2:00') + `</span>
+                                        <span class="location">🏢 ` + getEHall('Thursday', '1:00-2:00') + `</span>
                                     </div>
                                 </div>
                                 <div class="lecture">
                                     <span class="lecture-name">🏭 Lecture 18 – (Biochemistry: Lipid Structure 2)</span>
                                     <div class="time-location">
-                                        <span class="time">12:00-1:00</span>
-                                        <span class="location">🏢 Hall 4</span>
+                                        <span class="time">` + (group === 'D' ? '12:00-1:00' : '11:00-12:00') + `</span>
+                                        <span class="location">🏢 ` + getEHall('Thursday', '11:00-12:00') + `</span>
                                     </div>
                                 </div>
                                 <div class="lecture">
                                     <span class="lecture-name">⚗️ Lecture 19 – (Biochemistry: Lipid Structure 3)</span>
                                     <div class="time-location">
-                                        <span class="time">1:00-2:00</span>
-                                        <span class="location">🏢 Hall 4</span>
+                                        <span class="time">` + (group === 'D' ? '1:00-2:00' : '12:00-1:00') + `</span>
+                                        <span class="location">🏢 ` + getEHall('Thursday', '12:00-1:00') + `</span>
                                     </div>
                                 </div>
                             </div>
@@ -1371,9 +1418,17 @@
 
     document.getElementById('studentNumber').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
-            getSchedule();
+            if (userLanguage === 'arabic') {
+                getSchedule();
+            } else if (userLanguage === 'non-arabic' && document.getElementById('studentNumber').style.display !== 'none') {
+                 // Prevent non-Arabic enter if the input field is mistakenly visible, though it should be hidden
+                getSchedule(); 
+            } else if (userLanguage === 'non-arabic' && document.getElementById('studentNumber').style.display === 'none') {
+                showNonArabicSchedule();
+            }
         }
     });
+
 
     function goBack() {
         document.getElementById('result').style.display = 'none';
